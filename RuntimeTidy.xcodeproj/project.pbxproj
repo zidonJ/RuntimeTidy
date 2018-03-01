@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		72C4C8622047DE180015E40E /* ItemProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 72C4C8612047DE180015E40E /* ItemProperty.m */; };
 		72CB1B1D1FB29F6900ED060D /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 72CB1B1C1FB29F6900ED060D /* Person.m */; };
 		72CB1B231FB2CFE700ED060D /* UIViewController+MethodSwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 72CB1B221FB2CFE700ED060D /* UIViewController+MethodSwizzling.m */; };
 		72D85FDA1FB1C9F800B4F306 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = 72D85FD91FB1C9F800B4F306 /* Readme */; };
@@ -24,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		72C4C8602047DE180015E40E /* ItemProperty.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItemProperty.h; sourceTree = "<group>"; };
+		72C4C8612047DE180015E40E /* ItemProperty.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItemProperty.m; sourceTree = "<group>"; };
 		72CB1B1B1FB29F6900ED060D /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		72CB1B1C1FB29F6900ED060D /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		72CB1B211FB2CFE700ED060D /* UIViewController+MethodSwizzling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MethodSwizzling.h"; sourceTree = "<group>"; };
@@ -85,6 +88,8 @@
 				72F96E371FAB005A0003CEDF /* AppDelegate.m */,
 				72F96E391FAB005A0003CEDF /* ViewController.h */,
 				72F96E3A1FAB005A0003CEDF /* ViewController.m */,
+				72C4C8602047DE180015E40E /* ItemProperty.h */,
+				72C4C8612047DE180015E40E /* ItemProperty.m */,
 				72F96E4C1FAB00850003CEDF /* CallMessage.h */,
 				72F96E4D1FAB00850003CEDF /* CallMessage.m */,
 				72F96E4F1FAB009A0003CEDF /* AddMessage.h */,
@@ -184,6 +189,7 @@
 				72F96E541FAB00BD0003CEDF /* GoodFuncInRunTime.m in Sources */,
 				72F96E3B1FAB005A0003CEDF /* ViewController.m in Sources */,
 				72CB1B231FB2CFE700ED060D /* UIViewController+MethodSwizzling.m in Sources */,
+				72C4C8622047DE180015E40E /* ItemProperty.m in Sources */,
 				72F96E5D1FAB08570003CEDF /* CallMessageOptimize.m in Sources */,
 				72F96E511FAB009A0003CEDF /* AddMessage.m in Sources */,
 				72F96E5A1FAB07830003CEDF /* Invocation_MethodSignature.m in Sources */,
@@ -326,8 +332,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ET3Y989RPW;
-				ENABLE_STRICT_OBJC_MSGSEND = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				INFOPLIST_FILE = RuntimeTidy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MaiTian.RuntimeTidy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -341,8 +348,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ET3Y989RPW;
-				ENABLE_STRICT_OBJC_MSGSEND = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				INFOPLIST_FILE = RuntimeTidy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MaiTian.RuntimeTidy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
