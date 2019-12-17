@@ -13,8 +13,7 @@
 
 @implementation ItemProperty
 
-- (void)variable
-{
+- (void)variable {
     //  取得当前类类型
     Class cls = [self class];
     
@@ -47,12 +46,12 @@
     free(ivars);
 }
 
-- (void)associatedObject
-{
+- (void)associatedObject {
+    
     static char overviewKey;
     NSArray *array=[[NSArray alloc] initWithObjects:@"One", @"Two", @"Three", nil];
     NSString * overview = [[NSString alloc] initWithFormat:@"%@",@"First three numbers"];
-    objc_setAssociatedObject(array, &overviewKey, overview, OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(array, &overviewKey, overview, OBJC_ASSOCIATION_COPY_NONATOMIC);
     NSString *str = (NSString *)objc_getAssociatedObject(array, &overviewKey);
     NSLog(@"获取关联对象:%@",str);
     NSLog(@"befor:%@",array);
