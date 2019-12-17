@@ -11,3 +11,9 @@
 @interface UIViewController (MethodSwizzling)
 
 @end
+
+@interface UITableView (testReload)
+
+@property (nonatomic, weak) id emptyDataSetSource;
+
+@end

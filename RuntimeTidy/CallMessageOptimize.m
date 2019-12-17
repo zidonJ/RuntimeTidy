@@ -51,7 +51,7 @@ typedef void (*VIMP) (id,SEL,...);
     
     va_list arg_list;
     va_start(arg_list, sel);
-    while (YES) {
+    while (NO) {
         objSend = va_arg(arg_list, NSString *);
         
         if (objSend == nil) {

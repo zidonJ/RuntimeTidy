@@ -71,10 +71,86 @@ struct method_t {
     });
 }
 
-- (void)mt_viewWillAppear:(BOOL)animated
-{
+- (void)mt_viewWillAppear:(BOOL)animated {
     [self mt_viewWillAppear:animated];
     NSLog(@"将要进入界面");
 }
+
+@end
+
+static NSMutableDictionary *_impLookupTable;
+static NSString *const ZDSwizzleInfoPointerKey = @"pointer";
+static NSString *const ZDSwizzleInfoOwnerKey = @"owner";
+static NSString *const ZDSwizzleInfoSelectorKey = @"selector";
+
+@implementation UITableView (testReload)
+
+@dynamic emptyDataSetSource;
+
+- (void)setEmptyDataSetSource:(id)emptyDataSetSource {
+    [self swizzleIfPossible:@selector(reloadData)];
+}
+
+- (void)swizzleIfPossible:(SEL)selector {
+    if (![self respondsToSelector:selector]) {
+        return;
+    }
+    if (!_impLookupTable) {
+        _impLookupTable = [[NSMutableDictionary alloc] initWithCapacity:1];
+    }
+    for (NSDictionary *info in [_impLookupTable allValues]) {
+        Class class = [info objectForKey:ZDSwizzleInfoOwnerKey];
+        NSString *selectorName = [info objectForKey:ZDSwizzleInfoSelectorKey];
+        
+        if ([selectorName isEqualToString:NSStringFromSelector(selector)]) {
+            if ([self isKindOfClass:class]) {
+                return;
+            }
+        }
+    }
+    
+    Method method = class_getInstanceMethod(self.class, selector);
+    IMP tb_newImplementation = method_setImplementation(method, (IMP)tb_original_implementation);
+    
+    NSDictionary *swizzledInfo = @{ZDSwizzleInfoSelectorKey: self.class,
+                                   ZDSwizzleInfoOwnerKey: NSStringFromSelector(selector),
+                                   ZDSwizzleInfoPointerKey: [NSValue valueWithPointer:tb_newImplementation]};
+    
+    NSString *key = [NSString stringWithFormat:@"%@_%@",NSStringFromClass(self.class),NSStringFromSelector(selector)];
+    [_impLookupTable setObject:swizzledInfo forKey:key];
+}
+
+- (void)tb_reloadEmptyDataSet {
+    NSLog(@"调用reloadData了");
+}
+
+void tb_original_implementation(id self, SEL _cmd) {
+    
+    NSString *key = tb_implementationKey(UITableView.class, _cmd);
+    
+    NSDictionary *swizzleInfo = [_impLookupTable objectForKey:key];
+    NSValue *impValue = [swizzleInfo valueForKey:ZDSwizzleInfoPointerKey];
+    
+    IMP impPointer = [impValue pointerValue];
+
+    [self tb_reloadEmptyDataSet];
+    
+    if (impPointer) { //调用原来的方法实现
+        ((void(*)(id,SEL))impPointer)(self,_cmd);
+    }
+}
+
+NSString *tb_implementationKey(Class class, SEL selector)
+{
+    if (!class || !selector) {
+        return nil;
+    }
+    
+    NSString *className = NSStringFromClass([class class]);
+    
+    NSString *selectorName = NSStringFromSelector(selector);
+    return [NSString stringWithFormat:@"%@_%@",className,selectorName];
+}
+
 
 @end
