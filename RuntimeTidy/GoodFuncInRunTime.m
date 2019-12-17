@@ -29,8 +29,8 @@
  */
 typedef void (*VIMP) (id,SEL,...);
 
-@interface GoodFuncInRunTime()
-{
+@interface GoodFuncInRunTime() {
+    
     NSString *_name;
     NSString *_sex;
 }
@@ -44,8 +44,8 @@ typedef void (*VIMP) (id,SEL,...);
 
 @implementation GoodFuncInRunTime
 
-- (instancetype)init
-{
+- (instancetype)init {
+    
     self = [super init];
     if (self) {
         [self _init];
@@ -54,8 +54,8 @@ typedef void (*VIMP) (id,SEL,...);
     return self;
 }
 
-- (void)_init
-{
+- (void)_init {
+    
     _name = @"zidonj";
     _sex = @"HandsomeBoy";
     
@@ -65,8 +65,8 @@ typedef void (*VIMP) (id,SEL,...);
     _numDouble = 12345.6789;
 }
 
-- (void)myControl
-{
+- (void)myControl {
+    
     [self ergodic];
     [self imp_point];
     [self msg_send];
@@ -76,8 +76,8 @@ typedef void (*VIMP) (id,SEL,...);
 /**
  imp指针
  */
-- (void)imp_point
-{
+- (void)imp_point {
+    
     VIMP imp = (VIMP)[self methodForSelector:@selector(msgSendTest:p1:p2:)];
     imp(self,@selector(msgSendTest:p1:p2:),5,@"经典的旋律",10);
 }
@@ -86,8 +86,8 @@ typedef void (*VIMP) (id,SEL,...);
  <objc/message.h>
  objc_msgSend
  */
-- (void)msg_send
-{
+- (void)msg_send {
+    
     SEL selector = @selector(msgSendTest:p1:p2:);
     ((void (*)(id,SEL,...))objc_msgSend)(self,selector,5,@"啦啦啦",6);
     SEL selectorBack = @selector(msgSendTestBack:p1:p2:);
@@ -95,12 +95,8 @@ typedef void (*VIMP) (id,SEL,...);
     NSLog(@"返回值:%ld",temp);
 }
 
-
-/**
- 遍历
- */
-- (void)ergodic
-{
+/// 遍历
+- (void)ergodic {
     
     Class cls = [self class];
     unsigned int ivarsCnt = 0;
@@ -139,11 +135,9 @@ typedef void (*VIMP) (id,SEL,...);
     free(t_property);
 }
 
-/*
-    关联
- */
-- (void)assocatie
-{
+/// 关联
+- (void)assocatie {
+    
     static char overviewKey;
     NSArray *array=[[NSArray alloc] initWithObjects:@"One", @"Two", @"Three", nil];
     NSString * overview = [[NSString alloc] initWithFormat:@"%@",@"First three numbers"];
@@ -155,13 +149,11 @@ typedef void (*VIMP) (id,SEL,...);
     NSLog(@"after:%@",array);
 }
 
--(NSInteger)msgSendTestBack:(NSInteger)tp p1:(NSString *)p1 p2:(NSInteger)p2
-{
+- (NSInteger)msgSendTestBack:(NSInteger)tp p1:(NSString *)p1 p2:(NSInteger)p2 {
     return 1234567890;
 }
 
--(void)msgSendTest:(NSInteger)tp p1:(NSString *)p1 p2:(NSInteger)p2
-{
+- (void)msgSendTest:(NSInteger)tp p1:(NSString *)p1 p2:(NSInteger)p2 {
     NSLog(@"%ld_%@_%ld",tp,p1,p2);
 }
 

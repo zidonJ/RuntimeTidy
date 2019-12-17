@@ -10,8 +10,7 @@
 
 @implementation Invocation_MethodSignature
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         [self myControl];
@@ -19,8 +18,8 @@
     return self;
 }
 
-- (void)myControl
-{
+- (void)myControl {
+    
     //NSInvocation;用来包装方法和对应的对象，它可以存储方法的名称，对应的对象，对应的参数,
     /*
      NSMethodSignature:签名:再创建NSMethodSignature的时候,必须传递一个签名对象，签名对象的作用：用于获取参数的个数和方法的返回值

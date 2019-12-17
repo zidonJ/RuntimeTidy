@@ -12,8 +12,8 @@ typedef void (*VIMP) (id,SEL,...);
 
 @implementation CallMessageOptimize
 
-- (instancetype)init
-{
+- (instancetype)init {
+    
     self = [super init];
     if (self) {
         [self myControl];
@@ -21,8 +21,8 @@ typedef void (*VIMP) (id,SEL,...);
     return self;
 }
 
-- (void)myControl
-{
+- (void)myControl {
+    
     [self efficientCallMessage:@selector(test:)];
 }
 
@@ -39,8 +39,7 @@ typedef void (*VIMP) (id,SEL,...);
  3、调用 va_arg 开始取参数，主使抓到了，小弟们自然跑不掉。
  4、调用 va_end 将va_list指针置空
  */
-- (void)efficientCallMessage:(SEL)sel ,...
-{
+- (void)efficientCallMessage:(SEL)sel ,... {
     
     if (sel) {
         VIMP imp = (VIMP)[self methodForSelector:sel];
@@ -64,8 +63,7 @@ typedef void (*VIMP) (id,SEL,...);
     va_end(arg_list);
 }
 
-- (void)test:(NSString *)onlyOnePara
-{
+- (void)test:(NSString *)onlyOnePara {
     NSLog(@"IMP传多个参数只接受1个:%@",onlyOnePara);
 }
 
