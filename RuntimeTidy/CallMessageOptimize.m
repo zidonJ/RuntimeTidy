@@ -63,6 +63,19 @@ typedef void (*VIMP) (id,SEL,...);
     va_end(arg_list);
 }
 
+- (NSNumber *) addValues:(int) count, ... {
+    va_list args;
+    va_start(args, count);
+    NSNumber *value;
+    double retval = 0;
+    for( int i = 0; i < count; i++ ) {
+        value = va_arg(args, NSNumber *);
+        retval += [value doubleValue];
+    }
+    va_end(args);
+    return [NSNumber numberWithDouble:retval];
+}
+
 - (void)test:(NSString *)onlyOnePara {
     NSLog(@"IMP传多个参数只接受1个:%@",onlyOnePara);
 }

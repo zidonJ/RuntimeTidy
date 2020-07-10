@@ -28,6 +28,7 @@
  typedef void (*VIMP) (id,SEL,...); 自定义IMP指针 不需要修改llvm配置
  */
 typedef void (*VIMP) (id,SEL,...);
+typedef void (^CustomBlcok) (id,...);
 
 @interface GoodFuncInRunTime() {
     
@@ -39,6 +40,8 @@ typedef void (*VIMP) (id,SEL,...);
 @property (nonatomic,assign) NSInteger numInt;
 @property (nonatomic,assign) long numLong;
 @property (nonatomic,assign) double numDouble;
+
+@property (nonatomic, copy) CustomBlcok cbCall;
 
 @end
 
@@ -71,6 +74,33 @@ typedef void (*VIMP) (id,SEL,...);
     [self imp_point];
     [self msg_send];
     [self assocatie];
+    
+    
+    self.cbCall = ^(id a,...) {
+        va_list arg_list;
+        va_start(arg_list, a);
+        NSString *otherString;
+        NSMutableArray *arr = [NSMutableArray array];
+        [arr addObject:a];
+        if (a) {
+            while ((otherString = va_arg(arg_list, NSString *)) && [otherString isKindOfClass:NSString.class]) {
+                NSLog(@"11111可变参数:%@",otherString);
+                [arr addObject:otherString];
+            }
+        }
+        va_end(arg_list);
+        NSLog(@"可变参数数组:%@",arr);
+    };
+    self.cbCall(@"1",@"2",nil,@"4",@"5",@"6");
+    
+    NSString *str;
+    [self addressTest:&str];
+    NSLog(@"%@",str);
+}
+
+- (void)addressTest:(NSString **)str {
+    NSLog(@"%p",str);
+    *str = @"23423424";
 }
 
 /**
@@ -92,7 +122,7 @@ typedef void (*VIMP) (id,SEL,...);
     ((void (*)(id,SEL,...))objc_msgSend)(self,selector,5,@"啦啦啦",6);
     SEL selectorBack = @selector(msgSendTestBack:p1:p2:);
     NSInteger temp = ((NSInteger (*)(id,SEL,int,id,int))objc_msgSend)(self,selectorBack,5,@"啦啦啦",6);
-    NSLog(@"返回值:%ld",temp);
+    NSLog(@"返回值:%ld",(long)temp);
 }
 
 /// 遍历
