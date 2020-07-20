@@ -11,10 +11,25 @@
 
 @implementation CallMessage
 
++ (void)test:(NSInteger)a {
+    NSLog(@"------:%ld",a);
+}
+
+- (void)testa:(NSInteger)b {
+    NSLog(@"------:%ld",b);
+}
+
 - (instancetype)init
 {
     self = [super init];
     if (self) {
+        
+//        [self performSelector:@selector(test:) withObject:@1];
+//        [self performSelector:@selector(testa:) withObject:@1];
+        
+//        [CallMessage performSelector:@selector(test:) withObject:@5];
+//        [CallMessage performSelector:@selector(testa:) withObject:@6];
+        
         [self myControl];
     }
     return self;

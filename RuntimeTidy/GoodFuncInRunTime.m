@@ -91,7 +91,7 @@ typedef void (^CustomBlcok) (id,...);
         va_end(arg_list);
         NSLog(@"可变参数数组:%@",arr);
     };
-    self.cbCall(@"1",@"2",nil,@"4",@"5",@"6");
+    self.cbCall(@"1",@"2",@"100",@"4",@"5",@"6");
     
     NSString *str;
     [self addressTest:&str];

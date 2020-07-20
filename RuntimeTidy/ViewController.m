@@ -14,6 +14,7 @@
 #import "CallMessageOptimize.h"
 #import "Invocation_MethodSignature.h"
 #import "UIViewController+MethodSwizzling.h"
+#import <objc/runtime.h>
 
 @interface ViewController () <UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -45,6 +46,21 @@
     NSLog(@"%@",[AddMessage new]);
     
     self.tableView.emptyDataSetSource = self;
+    
+    BOOL isMeta = class_isMetaClass([ViewController class]);
+    NSLog(@"是否是元类1：%d",isMeta);
+    NSLog(@"是否是元类2：%d",class_isMetaClass([NSObject class]));
+    NSLog(@"是否是元类3：%d",class_isMetaClass(self.class));
+    
+    Class cls = object_getClass(self);
+    BOOL clsIsMeta = class_isMetaClass(cls);
+    NSLog(@"是否是元类4：%d",clsIsMeta);
+    
+    Class meta = object_getClass(cls);
+    BOOL metaIsMeta = class_isMetaClass(meta);
+    NSLog(@"是否是元类5：%d",metaIsMeta);
+    
+    NSLog(@"类&元类:%@-%@",cls,objc_getMetaClass("ViewController"));
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
