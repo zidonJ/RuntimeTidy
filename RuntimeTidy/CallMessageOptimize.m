@@ -23,7 +23,7 @@ typedef void (*VIMP) (id,SEL,...);
 
 - (void)myControl {
     
-    [self efficientCallMessage:@selector(test:)];
+    [self efficientCallMessage:NSObject.new,NSObject.new,NSObject.new,NSObject.new,NSObject.new,NSObject.new,nil];
 }
 
 /*
@@ -39,25 +39,14 @@ typedef void (*VIMP) (id,SEL,...);
  3、调用 va_arg 开始取参数，主使抓到了，小弟们自然跑不掉。
  4、调用 va_end 将va_list指针置空
  */
-- (void)efficientCallMessage:(SEL)sel ,... {
-    
-    if (sel) {
-        VIMP imp = (VIMP)[self methodForSelector:sel];
-        imp(self,sel,@"5",@"经典的旋律",10);
-    }
-    
-    NSString *objSend;
+- (void)efficientCallMessage:(id)sel ,... NS_REQUIRES_NIL_TERMINATION{
     
     va_list arg_list;
     va_start(arg_list, sel);
-    while (NO) {
-        objSend = va_arg(arg_list, NSString *);
-        
-        if (objSend == nil) {
-            break;
-        }else{
-            NSLog(@"可变参数:%@",objSend);
-        }
+    id objSend;
+    
+    while ((objSend = va_arg(arg_list, id))) {
+        NSLog(@"可变参数:%@---%p",objSend,objSend);
     }
     //取完之后毁掉va_list指针
     va_end(arg_list);

@@ -82,12 +82,12 @@ typedef void (^CustomBlcok) (id,...);
         NSString *otherString;
         NSMutableArray *arr = [NSMutableArray array];
         [arr addObject:a];
-        if (a) {
-            while ((otherString = va_arg(arg_list, NSString *)) && [otherString isKindOfClass:NSString.class]) {
-                NSLog(@"11111可变参数:%@",otherString);
-                [arr addObject:otherString];
-            }
-        }
+
+        //NSLog(@"11111可变参数:%@",va_arg(arg_list, NSString *));
+//        while ((otherString = va_arg(arg_list, NSString *)) && [otherString isKindOfClass:NSString.class]) {
+//            NSLog(@"11111可变参数:%@",otherString);
+//            [arr addObject:otherString];
+//        }
         va_end(arg_list);
         NSLog(@"可变参数数组:%@",arr);
     };
@@ -96,6 +96,19 @@ typedef void (^CustomBlcok) (id,...);
     NSString *str;
     [self addressTest:&str];
     NSLog(@"%@",str);
+    
+    
+    // block imp 交换
+    int (^impyBlock)(id, int, int) = ^(id _self, int a, int b)
+    {
+        return a+b;
+    };
+    // create an IMP from the block
+    int (*impyFunct)(id, SEL, int, int) = (void*) imp_implementationWithBlock(impyBlock);
+    // call the block, call the imp. Note the argumentation differences
+    NSLog(@"impyBlock: %d + %d = %d", 20, 22, impyBlock(nil, 20, 22));
+    NSLog(@"impyFunct: %d + %d = %d", 20, 22, impyFunct(nil, NULL, 20, 22));
+    
 }
 
 - (void)addressTest:(NSString **)str {
