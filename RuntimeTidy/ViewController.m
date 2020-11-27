@@ -26,7 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    
+    NSLog(@"123");
 //    NSString *myCString = @"123456789";
 //    NSValue *theValue = [NSValue valueWithBytes:&myCString objCType:@encode(NSString)];
 //    NSLog(@"%@",theValue);
